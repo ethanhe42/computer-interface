@@ -22,22 +22,22 @@ MOV  AH , 01H
 JJ:
 
 MOV  AL , [BX+SI]
-MOV  DX , 200H
+MOV  DX , 200H ; 送段码
 OUT  DX , AL
 
 MOV  AL,AH
-MOV  DX,201H
+MOV  DX,201H ; 送位码
 OUT  DX,AL
 
 CALL DELAY
-SHL  AL , 1
-MOV  AH , AL
+SHL  AL , 1 ; 循环显示
+MOV  AH , AL 
 DEC  CX
 
 CMP  CX,0  
 JNZ  JJ
 INC  SI
-CMP  SI,10
+CMP  SI,10 ; 显示下一个字符
 JNZ  GG
 JMP  START
 
