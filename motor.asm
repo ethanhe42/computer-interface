@@ -1,0 +1,62 @@
+.MODEL SMALL
+.386
+IO_ADDRESS EQU 200H
+SPEED EQU 02F00H  ;速度控制
+
+DATA SEGMENT
+DATA ENDS
+
+CODE SEGMENT
+      ASSUME CS:CODE,DS:DATA
+START:
+	  MOV AX,DATA
+      MOV DS,AX
+      MOV DX,IO_ADDRESS+3 ;控制端口
+      MOV AL,80H ; 送控制字
+      OUT DX,AL
+RPT:  MOV DX,IO_ADDRESS
+
+      MOV AL,01H ;步进电机节拍
+      OUT DX,AL
+      CALL DELAY ; 延时
+      MOV AL,03H
+      OUT DX,AL
+      CALL DELAY 
+
+      MOV AL,02H
+      OUT DX,AL
+      CALL DELAY
+
+      MOV AL,06H
+      OUT DX,AL
+      CALL DELAY 
+
+      MOV AL,04H
+      OUT DX,AL
+      CALL DELAY 
+
+      MOV AL,0CH
+      OUT DX,AL
+      CALL DELAY 
+
+      MOV AL,08H
+      OUT DX,AL
+      CALL DELAY
+
+      MOV AL,09H
+      OUT DX,AL
+      CALL DELAY 
+
+      JMP RPT
+
+DELAY PROC ; 延时
+       PUSH CX
+       MOV CX,SPEED ;控制速度
+DELAY1:LOOP DELAY1
+       POP CX
+       RET
+DELAY ENDP
+
+CODE  ENDS
+END START
+      
