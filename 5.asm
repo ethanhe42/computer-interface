@@ -78,16 +78,16 @@ push dx
 key3: mov si,offset table
 mov di,offset char
 mov cx,16
-key4: cmp ax,[si]
+key4: cmp ax,[si] ;确定按键编号
 jz key5;
 inc si
 inc si
 inc di
 loop key4
-key5: mov al,[di]
+key5: mov al,[di]  ;显示相应按键
 mov dx,led_cs
 out dx,al
-mov al,01h
+mov al,01h ;显示在第一个数码管
 inc dx
 out dx,al
 pop dx
